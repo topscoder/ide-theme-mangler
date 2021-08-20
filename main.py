@@ -10,12 +10,13 @@ import theme_mangler.formatters.FormatVSCode as FormatVSCode
 #   --output_dir=./output
 #   --output_format=intermediate (defaults to: target lang)
 class ThemeManglerCLI():
-    def __init__(self, source_file: str, source_format: str, target_format: str, output_dir: str = "./output"):
+    # parse_to_intermediate
 
+    def __init__(self, source_filepath: str, source_format: str, target_format: str, output_dir: str = "./output"):
         result = NotImplemented
 
         if source_format == "vscode":
-            formatter = FormatVSCode(source_file)
+            formatter = FormatVSCode(source_filepath)
             result_intermediate = formatter.get_intermediate()
 
             print(formatter.get_intermediate().raw())
@@ -30,8 +31,10 @@ class ThemeManglerCLI():
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    source_file = './test-files/vscode.1.json'
-    source_format = 'vscode'
-    target_format = 'intellij'
-    output_dir = './converted'
-    ThemeManglerCLI(source_file, source_format, target_format, output_dir)
+
+    ThemeManglerCLI(
+        './test-files/vscode.1.json',
+        'vscode',
+        'intellij',
+        './converted'
+    )

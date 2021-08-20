@@ -1,6 +1,6 @@
 
 
-import ThemeManglerIntermediateFormat
+import theme_mangler.formatters.ThemeManglerIntermediateFormat as ThemeManglerIntermediateFormat
 
 
 class FormatInterface: # (or maybe abstract class?)
@@ -11,7 +11,7 @@ class FormatInterface: # (or maybe abstract class?)
         self.intermediate_result = NotImplemented
         self.src_data = NotImplemented
 
-    def parse_to_intermediate(self, src_data: str):
+    def parse_to_intermediate(self, src_file: str):
         raise NotImplementedError
 
     def get_intermediate(self) -> ThemeManglerIntermediateFormat:
