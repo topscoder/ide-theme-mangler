@@ -1,7 +1,7 @@
 # CLI interface
 
 
-import theme_mangler.formatters.FormatVSCode as FormatVSCode
+from theme_mangler.formatters.FormatVSCode import FormatVSCode
 
 
 # theme-mangler.py
@@ -9,7 +9,7 @@ import theme_mangler.formatters.FormatVSCode as FormatVSCode
 #   --to=intellij
 #   --output_dir=./output
 #   --output_format=intermediate (defaults to: target lang)
-class ThemeManglerCLI():
+class ThemeManglerCLI:
     # parse_to_intermediate
 
     def __init__(self, source_filepath: str, source_format: str, target_format: str, output_dir: str = "./output"):
