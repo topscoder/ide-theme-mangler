@@ -3,7 +3,7 @@
 import theme_mangler.ThemeManglerIntermediateFormat as ThemeManglerIntermediateFormat
 
 
-class FormatInterface: # (or maybe abstract class?)
+class FormatInterface:
     intermediate_result: ThemeManglerIntermediateFormat
     src_data: str
 
@@ -21,4 +21,7 @@ class FormatInterface: # (or maybe abstract class?)
         raise NotImplementedError
 
     def read_file(filepath: str) -> str:
+        raise NotImplementedError
+
+    def to_output_format(self):
         raise NotImplementedError

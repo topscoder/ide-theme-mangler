@@ -13,16 +13,22 @@ class ThemeManglerCLI:
     # parse_to_intermediate
 
     def __init__(self, source_filepath: str, source_format: str, target_format: str, output_dir: str = "./output"):
-        result = NotImplemented
+        intermediate = NotImplemented
 
         if source_format == "vscode":
             formatter = FormatVSCode(source_filepath)
-            result_intermediate = formatter.get_intermediate()
+            intermediate = formatter.get_intermediate()
 
-            print(formatter.get_intermediate().raw())
+        if target_format == "intellij":
+            result = formatter.to_output_format()
+            print(result)
+            return
 
-        if result is NotImplemented:
-            self.usage()
+        if intermediate is NotImplemented:
+            print(self.usage())
+            return
+
+        print(intermediate.raw())
 
     @staticmethod
     def usage() -> object:
