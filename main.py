@@ -1,7 +1,7 @@
 # CLI interface
 
 
-from theme_mangler.formatters.FormatVSCode import FormatVSCode
+from theme_mangler.FormatVSCode import FormatVSCode
 
 
 # theme-mangler.py

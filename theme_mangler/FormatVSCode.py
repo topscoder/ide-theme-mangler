@@ -1,6 +1,6 @@
 
-from theme_mangler.formatters.FormatInterface import FormatInterface
-from theme_mangler.formatters.ThemeManglerIntermediateFormat import ThemeManglerIntermediateFormat
+from theme_mangler.FormatInterface import FormatInterface
+from theme_mangler.ThemeManglerIntermediateFormat import ThemeManglerIntermediateFormat
 
 
 class FormatVSCode(FormatInterface):

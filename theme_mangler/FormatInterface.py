@@ -1,6 +1,6 @@
 
 
-import theme_mangler.formatters.ThemeManglerIntermediateFormat as ThemeManglerIntermediateFormat
+import theme_mangler.ThemeManglerIntermediateFormat as ThemeManglerIntermediateFormat
 
 
 class FormatInterface: # (or maybe abstract class?)
