@@ -4,11 +4,11 @@ import theme_mangler.ThemeManglerIntermediateFormat as ThemeManglerIntermediateF
 
 
 class FormatInterface:
-    intermediate_result: ThemeManglerIntermediateFormat
+    intermediate: ThemeManglerIntermediateFormat
     src_data: str
 
     def __init__(self):
-        self.intermediate_result = NotImplemented
+        self.intermediate = NotImplemented
         self.src_data = NotImplemented
 
     def parse_to_intermediate(self, src_file: str):

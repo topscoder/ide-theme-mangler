@@ -29,7 +29,7 @@ As many Code editors and IDE's as possible. Starting with the one('s) I use by m
 
 ## License
 
-I like to have following line to be available at every project using (one of) this file(s):
+`topscoder/ide-theme-mangler` is licensed under the [Mozilla Public License 2.0](LICENSE)
 
 `(c) 2021, by an idea of github.com/topscoder`
 

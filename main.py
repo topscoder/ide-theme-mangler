@@ -2,33 +2,33 @@
 
 
 from theme_mangler.FormatVSCode import FormatVSCode
+from theme_mangler.FormatIntelliJ import FormatIntelliJ
 
 
-# theme-mangler.py
-#   --from=vscode
-#   --to=intellij
-#   --output_dir=./output
-#   --output_format=intermediate (defaults to: target lang)
 class ThemeManglerCLI:
-    # parse_to_intermediate
 
     def __init__(self, source_filepath: str, source_format: str, target_format: str, output_dir: str = "./output"):
         intermediate = NotImplemented
+        result = None
 
         if source_format == "vscode":
-            formatter = FormatVSCode(source_filepath)
-            intermediate = formatter.get_intermediate()
+            source_formatter = FormatVSCode()
+            source_formatter.add_source_file(source_filepath)
+            intermediate = source_formatter.get_intermediate()
 
         if target_format == "intellij":
-            result = formatter.to_output_format()
+            target_formatter = FormatIntelliJ()
+            target_formatter.set_intermediate(source_formatter)
+            result = target_formatter.to_output_format()
             print(result)
-            return
 
         if intermediate is NotImplemented:
             print(self.usage())
-            return
 
-        print(intermediate.raw())
+        if result is not None:
+            print(result)
+
+        #print(intermediate.raw())
 
     @staticmethod
     def usage() -> object:
