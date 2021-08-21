@@ -34,33 +34,6 @@ class FormatIntelliJ(FormatInterface):
         pass
 
     def to_output_format(self) -> str:
-        """
-        <scheme name="Github" version="142" parent_scheme="Default">
-          <metaInfo>
-            <property name="created">2021-08-20T09:52:20</property>
-            <property name="ide">Python</property>
-            <property name="ideVersion">2021.2.0.0</property>
-            <property name="modified">2021-08-20T09:52:33</property>
-            <property name="originalScheme">_@user_Github</property>
-          </metaInfo>
-          <colors>
-            <option name="CARET_COLOR" value="333333" />
-        """
-
-        result = ""
-
-        mapping = {
-            "editorLineNumber.foreground": "CARET_COLOR",
-            "editorLineNumber.foreground": "CARET_ROW_COLOR", # a mark (‸, ⁁) placed below the line to indicate a proposed insertion in a printed or written text.
-
-            "editorGutter.background": "GUTTER_BACKGROUND",
-            "editorIndentGuide.background": "INDENT_GUIDE",
-            "editorLineNumber.foreground": "LINE_NUMBERS_COLOR",
-            "tree.indentGuidesStroke": "SELECTED_INDENT_GUIDE",
-            "selection.background": "SELECTION_BACKGROUND",
-            "editorWhitespace.foreground": "WHITESPACES",
-        }
-
         doc, tag, text = Doc().tagtext()
 
         with tag('scheme'):
@@ -71,72 +44,76 @@ class FormatIntelliJ(FormatInterface):
                 source_formatter = self.get_intermediate()
                 colors = source_formatter.intermediate.container['colors']
 
-                editor_foreground = colors.get('editor.foreground').strip('#')[0:6] or ''
+                color_options = {
+                    'CARET_COLOR': colors.get('editor.foreground').strip('#')[0:6] or '',
+                    'CARET_ROW_COLOR': colors.get('editor.foreground').strip('#')[0:6] or '',
+                    'GUTTER_BACKGROUND': colors.get('editor.foreground').strip('#')[0:6] or '',
+                    'INDENT_GUIDE': colors.get('editorIndentGuide.background').strip('#')[0:6],
+                    'LINE_NUMBERS_COLOR': colors.get('editor.foreground').strip('#')[0:6] or '',
+                    'SELECTED_INDENT_GUIDE': colors.get('editorIndentGuide.background').strip('#')[0:6],
+                    'SELECTION_BACKGROUND': colors.get('editorIndentGuide.background').strip('#')[0:6],
+                    'WHITESPACES': colors.get('editorWhitespace.foreground').strip('#')[0:6] or ''
+                }
 
-                doc.stag('option', name='CARET_COLOR', value=editor_foreground)
-                doc.stag('option', name='CARET_ROW_COLOR', value=editor_foreground)
-                doc.stag('option', name='GUTTER_BACKGROUND', value=editor_foreground)
-                doc.stag('option', name='INDENT_GUIDE', value=colors.get('editorIndentGuide.background').strip('#')[0:6] or '')
-                doc.stag('option', name='LINE_NUMBERS_COLOR', value=editor_foreground)
-                doc.stag('option', name='SELECTED_INDENT_GUIDE', value=colors.get('editorIndentGuide.background').strip('#')[0:6] or '')
-                doc.stag('option', name='SELECTION_BACKGROUND', value=colors.get('editorIndentGuide.background').strip('#')[0:6] or '')
-                doc.stag('option', name='WHITESPACES', value=colors.get('editorWhitespace.foreground').strip('#')[0:6] or '')
+                for attr_key, attr_val in color_options.items():
+                    doc.stag('option', name=attr_key, value=attr_val)
 
-                # for prop, value in colors.items():
-                #     prop_def = mapping.get(prop) or prop
-                #     doc.stag('option', name=prop_def, value=value)
+            attribute_options = {
+                'TEXT': {
+                    'FOREGROUND': colors.get('editor.foreground').strip('#')[0:6] or '',
+                    'BACKGROUND': colors.get('editor.background').strip('#')[0:6] or ''
+                },
+                'BAD_CHARACTER': {
+                    'FOREGROUND': colors.get('errorForeground').strip('#')[0:6] or ''
+                },
+                'CONSOLE_RED_OUTPUT': {
+                    'FOREGROUND': colors.get('errorForeground').strip('#')[0:6] or ''
+                },
+                'DEFAULT_INVALID_STRING_ESCAPE': {
+                    'FOREGROUND': colors.get('errorForeground').strip('#')[0:6] or ''
+                },
+                'BUILDOUT.LINE_COMMENT': {
+                    'FOREGROUND': colors.get('descriptionForeground').strip('#')[0:6] or ''
+                },
+                'DEFAULT_BLOCK_COMMENT': {
+                    'FOREGROUND': colors.get('descriptionForeground').strip('#')[0:6] or ''
+                },
+                'DEFAULT_DOC_COMMENT': {
+                    'FOREGROUND': colors.get('descriptionForeground').strip('#')[0:6] or ''
+                },
+                'DEFAULT_DOC_COMMENT_TAG': {
+                    'FOREGROUND': colors.get('descriptionForeground').strip('#')[0:6] or ''
+                },
+                'DEFAULT_DOC_MARKUP': {
+                    'FOREGROUND': colors.get('editor.foreground').strip('#')[0:6] or ''
+                },
+                'DEFAULT_LINE_COMMENT': {
+                    'FOREGROUND': colors.get('editor.foreground').strip('#')[0:6] or ''
+                },
+                'DEFAULT_OPERATION_SIGN': {
+                    'FOREGROUND': colors.get('textPreformat.foreground').strip('#')[0:6] or ''
+                },
+                'DEFAULT_KEYWORD': {
+                    'FOREGROUND': colors.get('textPreformat.foreground').strip('#')[0:6] or ''
+                },
+                'BUILDOUT.KEY': {
+                    'FOREGROUND': colors.get('textPreformat.foreground').strip('#')[0:6] or ''
+                },
+                'BUILDOUT.KEY_VALUE_SEPARATOR': {
+                    'FOREGROUND': colors.get('textPreformat.foreground').strip('#')[0:6] or ''
+                },
+                'ERRORS_ATTRIBUTES': {
+                    'EFFECT_COLOR': colors.get('errorForeground').strip('#')[0:6] or '',
+                    'ERROR_STRIPE_COLOR': colors.get('errorForeground').strip('#')[0:6] or ''
+                },
+            }
 
             with tag('attributes'):
-                with tag('option', name='TEXT'):
-                    with tag('value'):
-                        doc.stag('option', name="FOREGROUND", value=colors.get('editor.foreground').strip('#')[0:6] or '')
-                        doc.stag('option', name="BACKGROUND", value=colors.get('editor.background').strip('#')[0:6] or '')
-                with tag('option', name='BAD_CHARACTER'):
-                    with tag('value'):
-                        doc.stag('option', name="FOREGROUND", value=colors.get('errorForeground').strip('#')[0:6] or '')
-                with tag('option', name='CONSOLE_RED_OUTPUT'):
-                    with tag('value'):
-                        doc.stag('option', name="FOREGROUND", value=colors.get('errorForeground').strip('#')[0:6] or '')
-                with tag('option', name='DEFAULT_INVALID_STRING_ESCAPE'):
-                    with tag('value'):
-                        doc.stag('option', name="FOREGROUND", value=colors.get('errorForeground').strip('#')[0:6] or '')
-
-                with tag('option', name='BUILDOUT.LINE_COMMENT'):
-                    with tag('value'):
-                        doc.stag('option', name="FOREGROUND", value=colors.get('descriptionForeground').strip('#')[0:6] or '')
-                with tag('option', name='DEFAULT_BLOCK_COMMENT'):
-                    with tag('value'):
-                        doc.stag('option', name="FOREGROUND", value=colors.get('descriptionForeground').strip('#')[0:6] or '')
-                with tag('option', name='DEFAULT_DOC_COMMENT'):
-                    with tag('value'):
-                        doc.stag('option', name="FOREGROUND", value=colors.get('descriptionForeground').strip('#')[0:6] or '')
-                with tag('option', name='DEFAULT_DOC_COMMENT_TAG'):
-                    with tag('value'):
-                        doc.stag('option', name="FOREGROUND", value=colors.get('descriptionForeground').strip('#')[0:6] or '')
-                with tag('option', name='DEFAULT_DOC_MARKUP'):
-                    with tag('value'):
-                        doc.stag('option', name="FOREGROUND", value=colors.get('editor.foreground').strip('#')[0:6] or '')
-                with tag('option', name='DEFAULT_LINE_COMMENT'):
-                    with tag('value'):
-                        doc.stag('option', name="FOREGROUND", value=colors.get('editor.foreground').strip('#')[0:6] or '')
-
-                with tag('option', name='DEFAULT_OPERATION_SIGN'):
-                    with tag('value'):
-                        doc.stag('option', name="FOREGROUND", value=colors.get('textPreformat.foreground').strip('#')[0:6] or '')
-                with tag('option', name='DEFAULT_KEYWORD'):
-                    with tag('value'):
-                        doc.stag('option', name="FOREGROUND", value=colors.get('textPreformat.foreground').strip('#')[0:6] or '')
-                with tag('option', name='BUILDOUT.KEY'):
-                    with tag('value'):
-                        doc.stag('option', name="FOREGROUND", value=colors.get('textPreformat.foreground').strip('#')[0:6] or '')
-                with tag('option', name='BUILDOUT.KEY_VALUE_SEPARATOR'):
-                    with tag('value'):
-                        doc.stag('option', name="FOREGROUND", value=colors.get('textPreformat.foreground').strip('#')[0:6] or '')
-
-                with tag('option', name='ERRORS_ATTRIBUTES'):
-                    with tag('value'):
-                        doc.stag('option', name="EFFECT_COLOR", value=colors.get('errorForeground').strip('#')[0:6] or '')
-                        doc.stag('option', name="ERROR_STRIPE_COLOR", value=colors.get('errorForeground').strip('#')[0:6] or '')
+                for attr_key in attribute_options:
+                    with tag('option', name=attr_key):
+                        with tag('value'):
+                            for opt_key, opt_val in attribute_options[attr_key].items():
+                                doc.stag('option', name=opt_key, value=opt_val)
 
         result = indent(
             doc.getvalue(),
