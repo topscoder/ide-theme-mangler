@@ -46,7 +46,7 @@ class ThemeManglerCLI:
 if __name__ == '__main__':
 
     ThemeManglerCLI(
-        './test-files/vscode.1.json',
+        './test-files/night-owl.vscode.json',
         'vscode',
         'intellij',
         './converted'

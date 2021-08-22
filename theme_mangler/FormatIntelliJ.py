@@ -3,7 +3,6 @@ from theme_mangler.FormatInterface import FormatInterface
 from theme_mangler.ThemeManglerIntermediateFormat import ThemeManglerIntermediateFormat
 
 from yattag import Doc, indent
-# import json
 
 INTELLIJ_ATTRIBUTES = {
     'DEFAULT_METADATA': '',
@@ -66,52 +65,52 @@ class FormatIntelliJ(FormatInterface):
         colors = source_formatter.intermediate.container['colors']
 
         return {
-            'CARET_COLOR': self.one_of(colors, 'editorCursor.background', 'editor.foreground'),
+            'CARET_COLOR': self.one_of(colors, 'button.background', 'editor.foreground'),
             'CARET_ROW_COLOR': self.select(colors, 'editor.foreground'),
             'CONSOLE_BACKGROUND_KEY': self.one_of(colors, 'panel.background', 'sideBar.background'),
             'GUTTER_BACKGROUND': self.one_of(colors, 'editorGutter.foreground', 'editor.foreground'),
             'INDENT_GUIDE': self.select(colors, 'editorIndentGuide.background'),
-            'LINE_NUMBERS_COLOR': self.select(colors, 'editorLineNumber.foreground'),
+            'LINE_NUMBERS_COLOR': self.one_of(colors, 'editorLineNumber.foreground', 'editor.selectionHighlightBackground'),
             'SELECTED_INDENT_GUIDE': self.select(colors, 'editor.lineHighlightBackground'),
-            'SELECTION_BACKGROUND': self.select(colors, 'editorIndentGuide.background'),
-            'WHITESPACES': self.select(colors, 'editorWhitespace.foreground'),
-            'ADDED_LINES_COLOR': self.select(colors, 'editorGutter.addedBackground'),
-            'ANNOTATIONS_COLOR': self.select(colors, 'variable.function'),
-            'DELETED_LINES_COLOR': self.select(colors, 'editorGutter.deletedBackground'),
-            'DIFF_SEPARATORS_BACKGROUND': self.select(colors, 'panel.background'),
-            'DOCUMENTATION_COLOR': self.select(colors, 'comment'),
-            'ERROR_HINT': self.select(colors, 'editorError.foreground'),
-            'FILESTATUS_ADDED': self.select(colors, 'gitDecoration.addedResourceForeground'),
-            'FILESTATUS_COPIED': self.select(colors, 'gitDecoration.modifiedResourceForeground'),
-            'FILESTATUS_DELETED': self.select(colors, 'gitDecoration.deletedResourceForeground'),
-            'FILESTATUS_IDEA_FILESTATUS_DELETED_FROM_FILE_SYSTEM': self.select(colors, 'gitDecoration.deletedResourceForeground'),
-            'FILESTATUS_IDEA_FILESTATUS_IGNORED': self.select(colors, 'gitDecoration.untrackedResourceForeground'),
-            'FILESTATUS_MERGED': self.select(colors, 'gitDecoration.modifiedResourceForeground'),
-            'FILESTATUS_MODIFIED': self.select(colors, 'gitDecoration.modifiedResourceForeground'),
-            'FILESTATUS_RENAMED': self.select(colors, 'gitDecoration.modifiedResourceForeground'),
-            'FILESTATUS_UNKNOWN': self.select(colors, 'gitDecoration.untrackedResourceForeground'),
-            'FILESTATUS_ADDEDOUTSIDE': self.select(colors, 'gitDecoration.addedResourceForeground'),
-            'FOLDED_TEXT_BORDER_COLOR': self.select(colors, 'sideBar.foreground'),
-            'INFORMATION_HINT': self.select(colors, 'editorOverviewRuler.infoForeground'),
-            'LINE_NUMBER_ON_CARET_ROW_COLOR': self.select(colors, 'editorLineNumber.foreground'),
-            'METHOD_SEPARATORS_COLOR': self.select(colors, 'editor.foreground'),
-            'MODIFIED_LINES_COLOR': self.select(colors, 'editorOverviewRuler.modifiedForeground'),
-            'NOTIFICATION_BACKGROUND': self.select(colors, 'notifications.background'),
-            'QUESTION_HINT': self.select(colors, 'editorOverviewRuler.infoForeground'),
-            'RECENT_LOCATIONS_SELECTION': self.select(colors, 'editorOverviewRuler.infoForeground'),
-            'RECURSIVE_CALL_ATTRIBUTES': self.select(colors, 'editorOverviewRuler.infoForeground'),
-            'RIGHT_MARGIN_COLOR': self.select(colors, 'editorOverviewRuler.infoForeground'),
-            'SELECTED_TEARLINE_COLOR': self.select(colors, 'editor.lineHighlightBackground'),
-            'SEPARATOR_BELOW_COLOR': self.select(colors, 'editorWhitespace.foreground'),
-            'SOFT_WRAP_SIGN_COLOR': self.select(colors, 'editorWhitespace.foreground'),
-            'TEARLINE_COLOR': self.select(colors, 'editor.foreground'),
-            'VCS_ANNOTATIONS_COLOR_1': self.select(colors, 'gitDecoration.addedResourceForgeround'),
-            'VCS_ANNOTATIONS_COLOR_2': self.select(colors, 'gitDecoration.modifiedResourceForeground'),
-            'VCS_ANNOTATIONS_COLOR_3': self.select(colors, 'gitDecoration.deletedResourceForeground'),
-            'VCS_ANNOTATIONS_COLOR_4': self.select(colors, 'gitDecoration.untrackedResourceForeground'),
-            'VCS_ANNOTATIONS_COLOR_5': self.select(colors, 'gitDecoration.conflictingResourceForeground'),
-            'VISUAL_INDENT_GUIDE': self.select(colors, 'editorWhitespace.foreground'),
-            'WHITESPACES_MODIFIED_LINES_COLOR': self.select(colors, 'gitDecoration.modifiedResourceForeground')
+            'SELECTION_BACKGROUND': self.select(colors, 'editor.selectionBackground'),
+            # 'WHITESPACES': self.select(colors, 'editorWhitespace.foreground'),
+            # 'ADDED_LINES_COLOR': self.select(colors, 'editorGutter.addedBackground'),
+            # 'ANNOTATIONS_COLOR': self.select(colors, 'variable.function'),
+            # 'DELETED_LINES_COLOR': self.select(colors, 'editorGutter.deletedBackground'),
+            # 'DIFF_SEPARATORS_BACKGROUND': self.select(colors, 'panel.background'),
+            # 'DOCUMENTATION_COLOR': self.select(colors, 'comment'),
+            # 'ERROR_HINT': self.select(colors, 'editorError.foreground'),
+            'FILESTATUS_ADDED': self.one_of(colors, 'gitDecoration.addedResourceForeground', 'terminal.ansiBrightCyan'),
+            'FILESTATUS_COPIED': self.one_of(colors, 'gitDecoration.modifiedResourceForeground', 'terminal.ansiBrightCyan'),
+            # 'FILESTATUS_DELETED': self.select(colors, 'gitDecoration.deletedResourceForeground'),
+            # 'FILESTATUS_IDEA_FILESTATUS_DELETED_FROM_FILE_SYSTEM': self.select(colors, 'gitDecoration.deletedResourceForeground'),
+            # 'FILESTATUS_IDEA_FILESTATUS_IGNORED': self.select(colors, 'gitDecoration.untrackedResourceForeground'),
+            'FILESTATUS_MERGED': self.one_of(colors, 'gitDecoration.modifiedResourceForeground', 'terminal.ansiBrightCyan'),
+            'FILESTATUS_MODIFIED': self.one_of(colors, 'gitDecoration.modifiedResourceForeground', 'terminal.ansiBrightCyan'),
+            'FILESTATUS_RENAMED': self.one_of(colors, 'gitDecoration.modifiedResourceForeground', 'terminal.ansiBrightCyan'),
+            # 'FILESTATUS_UNKNOWN': self.select(colors, 'gitDecoration.untrackedResourceForeground'),
+            # 'FILESTATUS_ADDEDOUTSIDE': self.select(colors, 'gitDecoration.addedResourceForeground'),
+            # 'FOLDED_TEXT_BORDER_COLOR': self.select(colors, 'sideBar.foreground'),
+            # 'INFORMATION_HINT': self.select(colors, 'editorOverviewRuler.infoForeground'),
+            # 'LINE_NUMBER_ON_CARET_ROW_COLOR': self.select(colors, 'editorLineNumber.foreground'),
+            # 'METHOD_SEPARATORS_COLOR': self.select(colors, 'editor.foreground'),
+            # 'MODIFIED_LINES_COLOR': self.select(colors, 'editorOverviewRuler.modifiedForeground'),
+            # 'NOTIFICATION_BACKGROUND': self.select(colors, 'notifications.background'),
+            # 'QUESTION_HINT': self.select(colors, 'editorOverviewRuler.infoForeground'),
+            # 'RECENT_LOCATIONS_SELECTION': self.select(colors, 'editorOverviewRuler.infoForeground'),
+            # 'RECURSIVE_CALL_ATTRIBUTES': self.select(colors, 'editorOverviewRuler.infoForeground'),
+            # 'RIGHT_MARGIN_COLOR': self.select(colors, 'editorOverviewRuler.infoForeground'),
+            # 'SELECTED_TEARLINE_COLOR': self.select(colors, 'editor.lineHighlightBackground'),
+            # 'SEPARATOR_BELOW_COLOR': self.select(colors, 'editorWhitespace.foreground'),
+            # 'SOFT_WRAP_SIGN_COLOR': self.select(colors, 'editorWhitespace.foreground'),
+            # 'TEARLINE_COLOR': self.select(colors, 'editor.foreground'),
+            # 'VCS_ANNOTATIONS_COLOR_1': self.select(colors, 'gitDecoration.addedResourceForgeround'),
+            # 'VCS_ANNOTATIONS_COLOR_2': self.select(colors, 'gitDecoration.modifiedResourceForeground'),
+            # 'VCS_ANNOTATIONS_COLOR_3': self.select(colors, 'gitDecoration.deletedResourceForeground'),
+            # 'VCS_ANNOTATIONS_COLOR_4': self.select(colors, 'gitDecoration.untrackedResourceForeground'),
+            # 'VCS_ANNOTATIONS_COLOR_5': self.select(colors, 'gitDecoration.conflictingResourceForeground'),
+            # 'VISUAL_INDENT_GUIDE': self.select(colors, 'editorWhitespace.foreground'),
+            # 'WHITESPACES_MODIFIED_LINES_COLOR': self.select(colors, 'gitDecoration.modifiedResourceForeground')
         }
 
     def get_attribute_settings(self):
@@ -131,8 +130,8 @@ class FormatIntelliJ(FormatInterface):
                 'EFFECT_COLOR': self.select(colors, 'errorForeground'),
                 'ERROR_STRIPE_COLOR': self.select(colors, 'errorForeground')
             },
-            'ANNOTATION_ATTRIBUTE_NAME_ATTRIBUTES': {''},
-            'ANNOTATION_NAME_ATTRIBUTES': {INTELLIJ_ATTRIBUTES['DEFAULT_METADATA']},
+            'ANNOTATION_ATTRIBUTE_NAME_ATTRIBUTES': {'FOREGROUND': self.select(colors, 'terminal.ansiBrightCyan')},
+            'ANNOTATION_NAME_ATTRIBUTES': {'FOREGROUND': self.select(colors, 'terminal.ansiBrightCyan')},
             'BOOKMARKS_ATTRIBUTES': {'ERROR_STRIPE_COLOR': self.select(colors, 'invalid')},
             'BUILDOUT.LINE_COMMENT': {'FOREGROUND': self.select(colors, 'descriptionForeground')},
             'BUILDOUT.KEY': {'FOREGROUND': self.select(colors, 'textPreformat.foreground')},
@@ -164,7 +163,7 @@ class FormatIntelliJ(FormatInterface):
             'CSS.KEYWORD': {'FOREGROUND': self.select(colors, 'keyword.operator.word')},
             'CSS.TAG_NAME': {'FOREGROUND': self.select(colors, 'support.type.property-name')},
             'CSS.URL': {INTELLIJ_ATTRIBUTES['HTML_ATTRIBUTE_VALUE']},
-            'CTRL_CLICKABLE': {'FOREGROUND': self.select(colors, 'button.background')},
+            'CTRL_CLICKABLE': {'FOREGROUND': self.one_of(colors, 'terminal.ansiBrightCyan', 'button.background')},
             'CUSTOM_KEYWORD1_ATTRIBUTES': {'FOREGROUND': self.select(colors, 'entity.other.attribute-name')},
             'CUSTOM_KEYWORD2_ATTRIBUTES': {'FOREGROUND': self.select(colors, 'entity.name.tag support.class.component')},
             'CUSTOM_KEYWORD3_ATTRIBUTES': {'FOREGROUND': self.select(colors, 'support.variable')},
@@ -187,7 +186,7 @@ class FormatIntelliJ(FormatInterface):
             'DEFAULT_IDENTIFIER': {'FOREGROUND': self.select(colors, 'variable.language')},
             'DEFAULT_INSTANCE_FIELD': {'FOREGROUND': self.select(colors, 'support.type.property-name')},
             'DEFAULT_INVALID_STRING_ESCAPE': {'FOREGROUND': self.select(colors, 'invalid')},
-            'DEFAULT_KEYWORD': {'FOREGROUND': self.select(colors, 'keyword.operator.word')},
+            'DEFAULT_KEYWORD': {'FOREGROUND': self.one_of(colors, 'keyword.operator.word', 'terminal.ansiBrightMagenta')},
             'DEFAULT_LINE_COMMENT': {'FOREGROUND': self.select(colors, 'comment')},
             'DEFAULT_METADATA': {'FOREGROUND': self.select(colors, 'entity.other.attribute-name')},
             'DEFAULT_NUMBER': {'FOREGROUND': self.select(colors, 'constant.numeric')},
@@ -215,6 +214,8 @@ class FormatIntelliJ(FormatInterface):
                     text('idea')
                 with tag('property', name='ideVersion'):
                     text('2019.1.0.0')
+                with tag('property', name='themeManglerTheme'):
+                    text('runtimeGenerated')
 
             # Generate color nodes
             with tag('colors'):
