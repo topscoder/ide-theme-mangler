@@ -20,15 +20,22 @@ class ThemeManglerCLI:
             target_formatter = FormatIntelliJ()
             target_formatter.set_intermediate(source_formatter)
             result = target_formatter.to_output_format()
-            print(result)
+            #print(result)
 
         if intermediate is NotImplemented:
             print(self.usage())
 
         if result is not None:
-            print(result)
+            # print(result)
 
-        #print(intermediate.raw())
+            target = './test-files/ThemeMangler.icls'
+
+            fd = open(target, 'w')
+            fd.write(result)
+            fd.close()
+
+            print('written to:')
+            print(target)
 
     @staticmethod
     def usage() -> object:
